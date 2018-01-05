@@ -14,7 +14,7 @@ sub compile_cobol {
     close $fh;
 
     # TODO look this up from the config file
-    %ENV=(%ENV, CPATH=>"/usr/include", C_INCLUDE_PATH=>"/usr/include", COB_CFLAGS=>"-I/langs/gnucobol-2.2/include -I/usr/include", SHELL=>"/bin/bash");
+    %ENV=(%ENV, CPATH=>"/usr/include", C_INCLUDE_PATH=>"/usr/include", COB_CFLAGS=>"-I/langs/gnucobol-2.2/include -I/usr/include", SHELL=>"/bin/bash", PATH=>"/usr/bin/");
 
     print "---BEGIN COMPILER OUTPUT---\n";
     system("/langs/gnucobol-2.2/bin/cobc", "-W", "-x", "cobol.cob") && die "WTF BBQ $! $?";
