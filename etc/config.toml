@@ -137,6 +137,12 @@ args=["-e", "%CODE%"]
 wrap_code="perl_wrap"
 seccomp_profile="lang_perl"
 
+[language."perl5.6t"]
+bin="/perl5/perlbrew/perls/perlbot-threaded-5.6.2/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap"
+seccomp_profile="lang_perl"
+
 [language."perl5.8"]
 bin="/perl5/perlbrew/perls/perl-5.8.9/bin/perl"
 args=["-e", "%CODE%"]
@@ -197,6 +203,12 @@ args=["-e", "%CODE%"]
 wrap_code="perl_wrap"
 seccomp_profile="lang_perl"
 
+[language."perl5.26t"]
+bin="/perl5/perlbrew/perls/perlbot-threaded-5.26.1/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap"
+seccomp_profile="lang_perl"
+
 [language."cperl"]
 bin="/perl5/perlbrew/perls/perlbot-cperl-5.26/bin/perl"
 args=["-e", "%CODE%"]
@@ -222,3 +234,8 @@ seccomp_profile="lang_javascript"
 [language.cobol]
 sub="compile_cobol"
 seccomp_profile="lang_cobol"
+
+[language.tcc]
+bin="/langs/tcc/bin/tcc"
+args=["-run", "%FILE%"]
+seccomp_profile="lang_tcc"

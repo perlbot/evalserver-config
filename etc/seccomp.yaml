@@ -7,6 +7,11 @@ constants:
     FIOCLEX: 0x5451
     FIONBIO: 0x5421
     TIOCGPTN: 0x80045430
+    IPC_PRIVATE: 0
+    IPC_STAT: 2
+    IPC_INFO: 3
+    IPC_SET: 1
+    IPC_RMID: 0
 
 profiles:
   default:
@@ -61,6 +66,8 @@ profiles:
       - syscall: pipe2
       - syscall: getrandom
       - syscall: dup2
+      - syscall: dup
+      - syscall: dup3
 
   time_calls:
     rules:
@@ -69,6 +76,8 @@ profiles:
       - syscall: clock_getres
 
   exec_wrapper:
+#    rules:
+#      - syscall: execve
     rule_generator: "ExecWrapper::exec_wrapper_gen"
 
   file_open:
@@ -131,11 +140,15 @@ profiles:
         - 'O_WRONLY'
         - 'O_TRUNC'
         - 'O_RDWR'
+        - 'O_APPEND'
     rules:
       - syscall: write
       - syscall: pwrite64
       - syscall: umask
       - syscall: chmod
+      - syscall: mkdir
+      - syscall: rmdir
+      - syscall: rename
 
   file_temp:
     rules:
@@ -175,7 +188,14 @@ profiles:
   lang_perl:
     include:
       - default
-    rules: []
+    rules:
+      - syscall: clone
+      - syscall: wait4
+      - syscall: shmget
+        tests: [[0, '==', 'IPC_PRIVATE']]
+      - syscall: shmctl
+      - syscall: shmat
+      - syscall: shmdt
 
   lang_perl6:
     include:
@@ -224,6 +244,12 @@ profiles:
         action: ERRNO(13) # EACCES error on socket
       - syscall: faccessat
       - syscall: dup
+
+  lang_tcc:
+    include:
+      - default
+      - lang_perl
+    rules: []
 
   stdio:
     rules:

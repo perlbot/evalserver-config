@@ -3,7 +3,6 @@ package Cobol;
 use strict;
 use warnings;
 use Moo::Role;
-use File::Glob;
 use Data::Dumper;
 
 sub compile_cobol {
