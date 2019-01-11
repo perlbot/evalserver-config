@@ -1,4 +1,5 @@
-package Perlbot;
+#package Perlbot;
+package App::EvalServerAdvanced::Sandbox::Plugin::Perlbot;
 
 use strict;
 use warnings;
