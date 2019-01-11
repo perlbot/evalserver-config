@@ -19,12 +19,15 @@ profiles:
       - time_calls
       - file_readonly
       - stdio
-      - exec_wrapper
+      - lang_cobol
+#      - exec_wrapper
       - file_write
       - file_tty
       - file_opendir
       - file_temp
     rules:
+      - syscall: execve
+      - syscall: statfs
 # Memory related calls
       - syscall: mmap
       - syscall: munmap
@@ -48,6 +51,10 @@ profiles:
       - syscall: getgid
       - syscall: getegid
       - syscall: getgroups
+      - syscall: setregid
+        tests:
+          - [0, '==', 65534]
+          - [1, '==', 65534]
 # System related
       - syscall: uname
 # Non-opening file related calls
@@ -68,12 +75,14 @@ profiles:
       - syscall: dup2
       - syscall: dup
       - syscall: dup3
+      - syscall: sysinfo
 
   time_calls:
     rules:
       - syscall: nanosleep
       - syscall: clock_gettime
       - syscall: clock_getres
+      - syscall: times
 
   exec_wrapper:
 #    rules:
@@ -149,6 +158,10 @@ profiles:
       - syscall: mkdir
       - syscall: rmdir
       - syscall: rename
+      - syscall: flock
+      - syscall: fsync
+      - syscall: ftruncate
+      - syscall: socketpair
 
   file_temp:
     rules:
@@ -196,6 +209,8 @@ profiles:
       - syscall: shmctl
       - syscall: shmat
       - syscall: shmdt
+      - syscall: socket
+        action: ERRNO(13) # EACCES error on socket
 
   lang_perl6:
     include:
@@ -262,3 +277,4 @@ profiles:
       - syscall: write # Write to STDERR
         tests:
           - [0, '==', 2]
+      - syscall: fadvise64
