@@ -1,5 +1,5 @@
-#package Perlbot;
-package App::EvalServerAdvanced::Sandbox::Plugin::Perlbot;
+package Perlbot;
+#package App::EvalServerAdvanced::Sandbox::Plugin::Perlbot;
 
 use strict;
 use warnings;
@@ -9,6 +9,8 @@ use Data::Dumper;
 use B::Deparse;
 use Perl::Tidy;
 use PerlIO;
+use List::Util qw/reduce/;
+
 do {my $temp; open(my $fh, ">", \$temp); close($fh)};
 
 sub deparse_perl_code {
@@ -71,10 +73,14 @@ sub deparse_perl_code {
 sub run_perl {
     my( $class, $lang, $code ) = @_;
 
-    my $outbuffer = "";
-    open(my $stdh, ">", \$outbuffer);
-    select($stdh);
     $|++;
+    my $testfh = select;
+    my $outfh = *STDOUT;
+    my $errfh = *STDERR;
+
+    my @tells = map {tell $_} $testfh, $outfh, $errfh;
+
+    # TODO fix STDIN to use files
 
     local $@;
     local @INC = map {s|/home/ryan||r} @INC;
@@ -108,10 +114,13 @@ sub run_perl {
     select STDOUT;
 
 
+    my @nextells = map {tell $_} $testfh, $outfh, $errfh;
+    my $posout = reduce {$a + $b} map {abs ($nextells[$_] - $tells[$_])} 0..$#tells;
 
-    if (length($outbuffer) > 0) {
-        print $outbuffer;
-    } else {
+
+#    print Dumper(\@tells, \@nextells);
+
+    if ($posout == 0) {
         local $Data::Dumper::Terse = 1;
         local $Data::Dumper::Quotekeys = 0;
         local $Data::Dumper::Indent = 0;
@@ -121,7 +130,7 @@ sub run_perl {
         no warnings;
         my $out = ref($ret) ? Dumper( $ret ) : "" . $ret;
     
-      print $out;
+        print $out;
     }
 
     if( $err ) { print "ERROR: $err" }
@@ -149,3 +158,5 @@ sub perl_wrap {
     ';
     return $wrapper;
 }
+
+1;
