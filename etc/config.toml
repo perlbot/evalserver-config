@@ -157,8 +157,20 @@ args=["-e", "%CODE%"]
 wrap_code="perl_wrap"
 seccomp_profile="lang_perl"
 
+[language."perl5.8.8"]
+bin="/perl5/perlbrew/perls/perlbot-5.8.8/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap"
+seccomp_profile="lang_perl"
+
 [language."perl5.10"]
 bin="/perl5/perlbrew/perls/perl-5.10.1/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap"
+seccomp_profile="lang_perl"
+
+[language."perl5.10.0"]
+bin="/perl5/perlbrew/perls/perlbot-5.10.0/bin/perl"
 args=["-e", "%CODE%"]
 wrap_code="perl_wrap"
 seccomp_profile="lang_perl"

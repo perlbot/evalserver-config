@@ -76,6 +76,7 @@ profiles:
       - syscall: dup
       - syscall: dup3
       - syscall: sysinfo
+      - syscall: chdir
 
   time_calls:
     rules:
