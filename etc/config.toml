@@ -80,12 +80,6 @@ CPU = 10
 "perl"={sub="run_perl", seccomp_profile="lang_perl"}
 "deparse"={sub="deparse_perl_code", seccomp_profile="lang_perl"}
 
-#[language.perl]
-#bin="/perl5/perlbrew/perls/perlbot-inuse/bin/perl"
-#args=["-e", "%CODE%"]
-#seccomp_profile="lang_perl"
-#wrap_code="perl_wrap"
-
 # TODO perls 1-3
 [language."perl1"]
 bin="/langs/perl-1.0.16/bin/perl"
@@ -138,164 +132,189 @@ seccomp_profile="lang_perl"
 [language."perl5.5"]
 bin="/perl5/perlbrew/perls/perl-5.005_04/bin/perl"
 args=["-e", "%CODE%"]
-#wrap_code="perl_wrap"
+#wrap_code="perl_wrap_file"
 seccomp_profile="lang_perl"
 
 [language."perl5.6"]
 bin="/perl5/perlbrew/perls/perl-5.6.2/bin/perl"
 args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
+wrap_code="perl_wrap_file"
 seccomp_profile="lang_perl"
 
 [language."perl5.6t"]
 bin="/perl5/perlbrew/perls/perlbot-threaded-5.6.2/bin/perl"
 args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
+wrap_code="perl_wrap_file"
 seccomp_profile="lang_perl"
 
-[language."perl5.8"]
-bin="/perl5/perlbrew/perls/perl-5.8.9/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.8.8"]
-bin="/perl5/perlbrew/perls/perlbot-5.8.8/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.10"]
-bin="/perl5/perlbrew/perls/perl-5.10.1/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.10.0"]
-bin="/perl5/perlbrew/perls/perlbot-5.10.0/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.12"]
-bin="/perl5/perlbrew/perls/perl-5.12.5/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.14"]
-bin="/perl5/perlbrew/perls/perl-5.14.4/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.16"]
-bin="/perl5/perlbrew/perls/perl-5.16.3/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.18"]
-bin="/perl5/perlbrew/perls/perl-5.18.4/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.20"]
-bin="/perl5/perlbrew/perls/perl-5.20.3/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.22"]
-bin="/perl5/perlbrew/perls/perl-5.22.3/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.24"]
-bin="/perl5/perlbrew/perls/perl-5.24.0/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.26"]
-bin="/perl5/perlbrew/perls/perlbot-5.26.1/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
+# Versioned perls!
 
 [language."perl5.28"]
-bin="/perl5/perlbrew/perls/perlbot-5.28.1/bin/perl"
+bin="/perl5/perlbrew/perls/perlbot-eval-5.28/bin/perl"
 args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-# Threaded perls
-[language."perl5.8t"]
-bin="/perl5/perlbrew/perls/perlbot-5.8t/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.10t"]
-bin="/perl5/perlbrew/perls/perlbot-5.10t/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.12t"]
-bin="/perl5/perlbrew/perls/perlbot-5.12t/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.14t"]
-bin="/perl5/perlbrew/perls/perlbot-5.14/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.16t"]
-bin="/perl5/perlbrew/perls/perlbot-5.16t/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.18t"]
-bin="/perl5/perlbrew/perls/perlbot-5.18t/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.20t"]
-bin="/perl5/perlbrew/perls/perlbot-5.20t/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.22t"]
-bin="/perl5/perlbrew/perls/perlbot-5.22t/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.24t"]
-bin="/perl5/perlbrew/perls/perlbot-5.24t/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
-seccomp_profile="lang_perl"
-
-[language."perl5.26t"]
-bin="/perl5/perlbrew/perls/perlbot-5.26t/bin/perl"
-args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
+wrap_code="perl_wrap_file"
 seccomp_profile="lang_perl"
 
 [language."perl5.28t"]
-bin="/perl5/perlbrew/perls/perlbot-5.28t/bin/perl"
+bin="/perl5/perlbrew/perls/perlbot-eval-5.28t/bin/perl"
 args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.26"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.26/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.26t"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.26t/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.24"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.24/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.24t"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.24t/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.22"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.22/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.22t"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.22t/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.20"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.20/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.20t"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.20t/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.18"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.18/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.18t"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.18t/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.16"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.16/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.16t"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.16t/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.14"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.14/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.14t"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.14t/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.12"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.12/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.12t"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.12t/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.10.1"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.10.1/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.10.1t"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.10.1t/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.10.0"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.10.0/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.10.0t"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.10.0t/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.8.9"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.8.9/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.8.9t"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.8.9t/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.8.8"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.8.8/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.8.8t"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.8.8t/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.8.4"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.8.4/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.8.4t"]
+bin="/perl5/perlbrew/perls/perlbot-eval-5.8.4t/bin/perl"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
 seccomp_profile="lang_perl"
 
 # Other
@@ -303,7 +322,7 @@ seccomp_profile="lang_perl"
 [language."cperl"]
 bin="/perl5/perlbrew/perls/perlbot-cperl-5.26/bin/perl"
 args=["-e", "%CODE%"]
-wrap_code="perl_wrap"
+wrap_code="perl_wrap_file"
 seccomp_profile="lang_perl"
 
 [language."perl6"]

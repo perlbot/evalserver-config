@@ -138,40 +138,45 @@ sub run_perl {
     if( $err ) { print "ERROR: $err" }
 }
 
-sub perl_wrap {
-    my ($class, $lang, $code) = @_;
-    my $qcode = quotemeta $code;
-
-    my @files;
+sub get_stdin {
+    my @std_files;
     my $path_stdins = path('stdins')->iterator();
     while (my $filename = $path_stdins->()) {
-      push @files, $filename if -f $filename;
+      push @std_files, $filename if -f $filename;
     }
-    my $randfile = @files[rand()*@files];
     
-    my $wrapper = 'use Data::Dumper; 
+    my $randfile = @std_files[rand()*@std_files];
+    return $randfile
+}
 
+sub perl_wrap_file {
+    my ($class, $lang, $code) = @_;
+
+    my $codefile = Path::Tiny->tempfile(TEMPLATE => "perl_code_XXXXXXXXXX", DIR => '/eval/', UNLINK => 0);
+    $codefile->spew($code);
+
+    my $randfile = get_stdin();
+
+    my $wrapper = q[use Data::Dumper; 
     $|++;
     use IO::Handle;
     my $testfh = select;
     my $outfh = *STDOUT;
     my $errfh = *STDERR;
+    my $randfile = '].$randfile.q[';
 
-    ' . ($lang ne 'perl5.5' ? '
-    do {
+    eval {
       local $@;
-      eval {
-        close(STDIN);
-        open(STDIN, "<", \''.$randfile.'\');
-      }
-    };' : '') . '
+      close(STDIN);
+      open(STDIN, "<", $randfile);
+    };
 
     use Fcntl qw/SEEK_CUR/;
     sub systell { sysseek($_[0], 0, SEEK_CUR) }
 
     my @tells = map {$_->flush(); (tell($_), systell($_))} $testfh, $outfh, $errfh;
 
-    my $val = eval "#line 1 \"(IRC)\"\n'.$qcode.'";
+    my $value = eval {do ']. $codefile .q[';};
 
     my @nextells = map {$_->flush(); (tell($_), systell($_))} $testfh, $outfh, $errfh;
 
@@ -187,11 +192,10 @@ sub perl_wrap {
         local $Data::Dumper::Indent = 0;
         local $Data::Dumper::Useqq = 1;
         $val = ref($val) ? Dumper ($val) : "".$val;
-#        $val = " $val" if ($[ < 5.008); # fuck 5.6
         print $val;
       } 
     }
-    ';
+    ];
     return $wrapper;
 }
 
