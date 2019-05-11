@@ -105,7 +105,7 @@ sub run_perl {
             local $\;
             local $,;
             if ($] >= 5.026) {
-                $code = "use $]; use feature qw/postderef refaliasing lexical_subs postderef_qq signatures/; use experimental 'declared_refs';\n#line 1 \"(IRC)\"\n$code";
+                $code = "use $]; use feature qw/postderef refaliasing lexical_subs postderef_qq signatures/; use experimental 'declared_refs';\nuse experimental 'signatures';\n#line 1 \"(IRC)\"\n$code";
             } else {
                 $code = "use $]; use feature qw/postderef refaliasing lexical_subs postderef_qq signatures/;\n#line 1 \"(IRC)\"\n$code";
             }
@@ -157,13 +157,14 @@ sub perl_wrap {
     my $outfh = *STDOUT;
     my $errfh = *STDERR;
 
+    ' . ($lang ne 'perl5.5' ? '
     do {
       local $@;
       eval {
         close(STDIN);
         open(STDIN, "<", \''.$randfile.'\');
       }
-    };
+    };' : '') . '
 
     use Fcntl qw/SEEK_CUR/;
     sub systell { sysseek($_[0], 0, SEEK_CUR) }

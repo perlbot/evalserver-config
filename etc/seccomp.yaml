@@ -12,6 +12,7 @@ constants:
     IPC_INFO: 3
     IPC_SET: 1
     IPC_RMID: 0
+    S_IFIFO: 4096
 
 profiles:
   default:
@@ -163,6 +164,10 @@ profiles:
       - syscall: fsync
       - syscall: ftruncate
       - syscall: socketpair
+      - syscall: utimensat
+      - syscall: mknod
+        tests:
+          - [1, '==', 'S_IFIFO | 0666']
 
   file_temp:
     rules:
