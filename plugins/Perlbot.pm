@@ -176,12 +176,13 @@ sub perl_wrap_file {
 
     my @tells = map {$_->flush(); (tell($_), systell($_))} $testfh, $outfh, $errfh;
 
-    my $value = eval {do ']. $codefile .q[';};
+    my $value = do ']. $codefile .q[';
+    my $err=$@;
 
     my @nextells = map {$_->flush(); (tell($_), systell($_))} $testfh, $outfh, $errfh;
-
-    if ($@) {
-      print "ERROR: $@";
+    ].($lang =~ /5\.6/? 'print $val' : q[
+    if ($err) {
+      print "ERROR: $err";
     } else {
       use List::Util qw/reduce/; 
       my $posout = reduce {$a + $b} map {abs ($nextells[$_] - $tells[$_])} 0..$#tells;
@@ -195,7 +196,7 @@ sub perl_wrap_file {
         print $val;
       } 
     }
-    ];
+    ]);
     return $wrapper;
 }
 
