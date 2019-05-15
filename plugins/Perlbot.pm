@@ -158,6 +158,7 @@ sub perl_wrap_file {
     my $randfile = get_stdin();
 
     my $wrapper = q[use Data::Dumper; 
+    use strict;
     $|++;
     use IO::Handle;
     my $testfh = select;
@@ -192,8 +193,8 @@ sub perl_wrap_file {
         local $Data::Dumper::Quotekeys = 0;
         local $Data::Dumper::Indent = 0;
         local $Data::Dumper::Useqq = 1;
-        $val = ref($val) ? Dumper ($val) : "".$val;
-        print $val;
+        $value = ref($value) ? Dumper ($value) : "".$value;
+        print $value;
       } 
     }
     ]);
