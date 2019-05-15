@@ -14,6 +14,28 @@ use Path::Tiny;
 
 do {my $temp; open(my $fh, ">", \$temp); close($fh)};
 
+my $AcmeCode = << 'EOF';
+package Acme::RandomOS;
+  use File::Temp;
+  BEGIN {
+    $Acme::RandomOS::__original="".$^O;
+  }
+  sub TIESCALAR {
+    my $a; $a=\$a;
+    return bless $a, __PACKAGE__;
+  }
+  sub FETCH {
+    my ($p)=caller(1); 
+    if ($p eq 'File::Temp') {
+      return $Acme::RandomOS::__original
+    } else {
+      my @os=qw/aix bsdos dynixptx darwin freebsd haiku linux hpux irix next openbsd dec_osf svr4 sco_sv unicos unicosmk solaris sunos MSWin32 dos os2 cygwin VMS vos os390 os400 posix-bc riscos amigaos macos 3b1 atari MSWinCE/; 
+      $os[rand()*@os];
+    } 
+  };
+  {my$hidden;tie$hidden,'Acme::RandomOS';$^O=$hidden};
+EOF
+
 sub deparse_perl_code {
     my( $class, $lang, $code ) = @_;
     my $sub;
@@ -109,6 +131,10 @@ sub run_perl {
             } else {
                 $code = "use $]; use feature qw/postderef refaliasing lexical_subs postderef_qq signatures/;\n#line 1 \"(IRC)\"\n$code";
             }
+{ local $@;
+eval $AcmeCode;
+}
+
             $ret = eval $code;
             $err = $@;
         }
@@ -166,6 +192,15 @@ sub perl_wrap_file {
     my $errfh = *STDERR;
     my $randfile = '].$randfile.q[';
 
+    my $AcmeCode= <<'EOF';
+].$AcmeCode.q[
+EOF
+
+    
+  { local $@;
+    eval $AcmeCode;
+  }
+
     eval {
       local $@;
       close(STDIN);
@@ -181,7 +216,7 @@ sub perl_wrap_file {
     my $err=$@;
 
     my @nextells = map {$_->flush(); (tell($_), systell($_))} $testfh, $outfh, $errfh;
-    ].($lang =~ /5\.6/? 'print $val' : q[
+    ].($lang =~ /5\.6/? 'print $value' : q[
     if ($err) {
       print "ERROR: $err";
     } else {
