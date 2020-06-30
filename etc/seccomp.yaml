@@ -42,6 +42,7 @@ profiles:
       - syscall: rt_sigaction
       - syscall: rt_sigprocmask
       - syscall: rt_sigreturn
+      - syscall: sigaltstack
 # User related calls
       - syscall: getuid
       - syscall: geteuid
@@ -70,6 +71,7 @@ profiles:
 # Limit/Capabilities related
       - syscall: getrlimit
       - syscall: prctl
+      - syscall: prlimit64
 # Misc
       - syscall: pipe2
       - syscall: getrandom
@@ -78,6 +80,7 @@ profiles:
       - syscall: dup3
       - syscall: sysinfo
       - syscall: chdir
+      - syscall: kill
 
   time_calls:
     rules:
@@ -94,17 +97,18 @@ profiles:
   file_open:
     rules:
       - syscall: open
-        tests:
-          - [1, '==', '{{open_modes}}']
+#        tests:
+#          - [1, '==', '{{open_modes}}']
       - syscall: openat
-        tests:
-          - [2, '==', '{{open_modes}}']
+#        tests:
+#          - [2, '==', '{{open_modes}}']
       - syscall: close
       - syscall: select
       - syscall: read
       - syscall: pread64
       - syscall: lseek
       - syscall: fstat
+      - syscall: newfstatat
       - syscall: stat
       - syscall: lstat
       - syscall: fcntl
@@ -119,6 +123,7 @@ profiles:
       - file_open
     rules:
       - syscall: getdents
+      - syscall: getdents64
       - syscall: open
         tests:
           - [1, '==', 'O_DIRECTORY|O_RDONLY|O_NONBLOCK|O_CLOEXEC']
@@ -154,20 +159,29 @@ profiles:
         - 'O_APPEND'
     rules:
       - syscall: write
+      - syscall: writev
       - syscall: pwrite64
       - syscall: umask
       - syscall: chmod
+      - syscall: fchmod
+      - syscall: fchmodat
       - syscall: mkdir
       - syscall: rmdir
       - syscall: rename
+      - syscall: renameat
+      - syscall: renameat2
       - syscall: flock
       - syscall: fsync
       - syscall: ftruncate
       - syscall: socketpair
       - syscall: utimensat
+      - syscall: utimes
+      - syscall: msync
       - syscall: mknod
         tests:
           - [1, '==', 'S_IFIFO | 0666']
+      - syscall: symlinkat
+      - syscall: symlink
 
   file_temp:
     rules:
@@ -175,6 +189,7 @@ profiles:
         tests:
           - [1, '==', 0o600]
       - syscall: unlink
+      - syscall: unlinkat
 
   lang_javascript:
     include:
