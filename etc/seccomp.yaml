@@ -81,10 +81,13 @@ profiles:
       - syscall: sysinfo
       - syscall: chdir
       - syscall: kill
+      - syscall: sched_getaffinity
+      - syscall: alarm
 
   time_calls:
     rules:
       - syscall: nanosleep
+      - syscall: clock_nanosleep
       - syscall: clock_gettime
       - syscall: clock_getres
       - syscall: times
@@ -110,6 +113,7 @@ profiles:
       - syscall: fstat
       - syscall: newfstatat
       - syscall: stat
+      - syscall: statx
       - syscall: lstat
       - syscall: fcntl
 # ioctl(4, TCGETS, 0xDEADCAFEBABE) = -1 ENOTTY (Inappropriate ioctl for device)

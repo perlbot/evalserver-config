@@ -283,6 +283,9 @@ EOF
     my @tells = map {$_->flush(); (tell($_), systell($_))} $testfh, $outfh;
 
     my $value = do ']. $codefile .q[';
+    eval "use diagnostics;
+    disable diagnostics;";
+    no warnings;
     my $err=$@;
 
     my @nextells = map {$_->flush(); (tell($_), systell($_))} $testfh, $outfh;
