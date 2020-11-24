@@ -4,7 +4,7 @@ host = "192.168.32.1"
 debug = 1
 
 [jobmanager]
-max_workers = 18
+max_workers = 5
 timeout = 11
 min_deadline = 100 # minimum number of milliseconds to allow a deadline to request
 
