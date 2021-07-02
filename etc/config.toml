@@ -25,6 +25,8 @@ bind_mounts = [
 	{src = "lib64",           target = "/lib64"},
 	{src = "lib",             target = "/lib"},
 	{src = "usr",         target = "/usr"},
+	{src = "usr/bin",         target = "/usr/bin"},
+	{src = "opt",         target = "/opt"},
 	{src = "etc",         target = "/etc"},
 	{src = "bin",         target = "/bin"},
 	{src = "var",         target = "/var"},
@@ -86,41 +88,53 @@ CPU = 10
 # "deparse"={sub="deparse_perl_code", seccomp_profile="lang_perl"}
 
 [language."deparse"]
-bin="/perl5/custom/blead/bin/perl"
+bin="/perl5/custom/5.34/bin/perl"
 args=["-MO=Deparse,-p,-q,-x7,-d", "%FILE%"]
 seccomp_profile="lang_perl"
 
 [language."deparse2"]
-bin="/perl5/custom/blead/bin/perl"
+bin="/perl5/custom/5.34/bin/perl"
 args=["-MO=Deparse,-p,-q,-x7,-d", "%FILE%"]
 seccomp_profile="lang_perl"
 
 [language."concise"]
-bin="/perl5/custom/blead/bin/perl"
+bin="/perl5/custom/5.34/bin/perl"
 args=["-MO=Concise", "%FILE%"]
 seccomp_profile="lang_perl"
 
 [language."perl"]
-bin="/perl5/custom/blead/bin/perl"
+bin="/perl5/custom/5.34/bin/perl"
 args=["-e", "%CODE%"]
 wrap_code="perl_wrap_file"
 seccomp_profile="lang_perl"
 
 [language."perlt"]
-bin="/perl5/custom/blead-threads/bin/perl"
+bin="/perl5/custom/5.34-threads/bin/perl"
 args=["-e", "%CODE%"]
 wrap_code="perl_wrap_file"
 seccomp_profile="lang_perl"
 
 # Major releases
+[language."perl5.34"]
+bin="/perl5/custom/5.34/bin/perl5.34.0"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.34t"]
+bin="/perl5/custom/5.34-threads/bin/perl5.34.0"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
 [language."perl5.32"]
-bin="/perl5/custom/5.32/bin/perl5.32.0"
+bin="/perl5/custom/5.32/bin/perl5.32.1"
 args=["-e", "%CODE%"]
 wrap_code="perl_wrap_file"
 seccomp_profile="lang_perl"
 
 [language."perl5.32t"]
-bin="/perl5/custom/5.32-threads/bin/perl5.32.0"
+bin="/perl5/custom/5.32-threads/bin/perl5.32.1"
 args=["-e", "%CODE%"]
 wrap_code="perl_wrap_file"
 seccomp_profile="lang_perl"
@@ -294,6 +308,29 @@ wrap_code="perl_wrap_file"
 seccomp_profile="lang_perl"
 
 # Stable released perls
+[language."perl5.34.0"]
+bin="/perl5/custom/5.34.0/bin/perl5.34.0"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.34.0t"]
+bin="/perl5/custom/5.34.0-threads/bin/perl5.34.0"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.32.1"]
+bin="/perl5/custom/5.32.1/bin/perl5.32.1"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
+
+[language."perl5.32.1t"]
+bin="/perl5/custom/5.32.1-threads/bin/perl5.32.1"
+args=["-e", "%CODE%"]
+wrap_code="perl_wrap_file"
+seccomp_profile="lang_perl"
 
 [language."perl5.32.0"]
 bin="/perl5/custom/5.32.0/bin/perl5.32.0"
@@ -1184,4 +1221,9 @@ seccomp_profile="lang_tcc"
 [language.bash]
 bin="/bin/bash"
 args=["%FILE%"]
+seccomp_profile="lang_perl"
+
+[language.pwsh]
+bin="/usr/bin/pwsh"
+args=["-c", "%CODE"]
 seccomp_profile="lang_perl"

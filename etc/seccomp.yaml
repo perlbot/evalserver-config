@@ -48,6 +48,7 @@ profiles:
       - syscall: geteuid
       - syscall: getcwd
       - syscall: getpid
+      - syscall: getsid
       - syscall: getppid
       - syscall: gettid
       - syscall: getgid
@@ -82,6 +83,9 @@ profiles:
       - syscall: chdir
       - syscall: kill
       - syscall: sched_getaffinity
+      - syscall: sched_setaffinity
+      - syscall: get_mempolicy
+      - syscall: mlock
       - syscall: alarm
 
   time_calls:
@@ -186,6 +190,7 @@ profiles:
           - [1, '==', 'S_IFIFO | 0666']
       - syscall: symlinkat
       - syscall: symlink
+      - syscall: chown
 
   file_temp:
     rules:
@@ -236,6 +241,10 @@ profiles:
       - syscall: shmdt
       - syscall: socket
         action: ERRNO(13) # EACCES error on socket
+      - syscall: membarrier
+#        action: ERRNO(88) # ENOSYS error on socket
+      - syscall: getpeername
+        action: ERRNO(22) # EACCES error on socket
 
   lang_perl6:
     include:
