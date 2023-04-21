@@ -218,7 +218,7 @@ sub perl_wrap_file {
 
     if ($lang eq 'perl' || $lang eq 'perlt') {
         # TODO this should be more dynamic
-        $code = "use v5.31; no strict; use feature qw/isa postderef refaliasing lexical_subs postderef_qq signatures/; use experimental 'declared_refs';\nuse experimental 'isa';\nuse experimental 'signatures';\n#line 1 \"(IRC)\"\n$incode";
+        $code = "use v5.35.12; no strict; use feature qw/isa postderef refaliasing lexical_subs postderef_qq signatures/; use experimental 'declared_refs';\nuse experimental 'isa';\nuse experimental 'signatures';use experimental 'defer';use builtin qw/true false reftype weaken unweaken blessed refaddr is_bool is_weak/;\n#line 1 \"(IRC)\"\n$incode";
     } elsif ($version >= 8) {
       $code = qq{use v5.$version;\nno strict;no warnings;\n};
       if ($version >= 22) {
