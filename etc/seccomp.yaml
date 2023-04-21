@@ -29,6 +29,7 @@ profiles:
     rules:
       - syscall: execve
       - syscall: statfs
+      - syscall: 334 # rseq, not known by modules yet
 # Memory related calls
       - syscall: mmap
       - syscall: munmap
@@ -57,6 +58,12 @@ profiles:
       - syscall: setregid
         tests:
           - [0, '==', 65534]
+          - [1, '==', 65534]
+      - syscall: setresuid
+        tests:
+          - [1, '==', 65534]
+      - syscall: setresgid
+        tests:
           - [1, '==', 65534]
 # System related
       - syscall: uname
