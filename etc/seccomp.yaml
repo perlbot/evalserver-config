@@ -31,6 +31,7 @@ profiles:
       - syscall: statfs
       - syscall: 334 # rseq, not known by modules yet
 # Memory related calls
+      - syscall: memfd_create
       - syscall: mmap
       - syscall: munmap
       - syscall: mremap
@@ -102,6 +103,7 @@ profiles:
       - syscall: clock_gettime
       - syscall: clock_getres
       - syscall: times
+      - syscall: gettimeofday
 
   exec_wrapper:
 #    rules:
